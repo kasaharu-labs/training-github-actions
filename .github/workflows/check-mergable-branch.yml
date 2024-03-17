@@ -1,0 +1,20 @@
+name: main ブランチにマージを許可したブランチかチェックする
+# Check if branch can be merged to main
+# `feature/xxx` または `hotfix/xxx` から `main` へのマージは許可する
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if branch name does not start with feature/ or hotfix/
+        run: |
+          BRANCH_NAME=${{ github.head_ref }}
+          if [[ ! $BRANCH_NAME == feature/* ]] && [[ ! $BRANCH_NAME == hotfix/* ]]; then
+            echo "Error: Branch names should start with 'feature/' or 'hotfix/'."
+            exit 1
+          fi
