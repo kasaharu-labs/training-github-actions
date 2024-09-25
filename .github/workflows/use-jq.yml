@@ -1,0 +1,34 @@
+name: Add JSON file test
+
+on: workflow_dispatch
+
+jobs:
+  create_json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # sample1: 配列を含む新規の JSON ファイルを新規作成
+      - name: Create sample1.json
+        run: |
+          echo -e '{"orgs": ["組織A", "組織B"]}' | jq > sample1.json
+
+      # sample1: 作成した JSON ファイルを確認
+      - name: sample1.json output
+        run: cat sample1.json
+
+      # sample2: 既存のフィールドを持つ JSON ファイルを作成
+      - name: Create sample2.json
+        run: |
+          echo -e '{ "user": "hoge" }' | jq > sample2.json
+
+      # sample2: 既存の JSON ファイルの orgs フィールドを配列で更新
+      - name: Update orgs sample2.json
+        run: |
+          jq --raw-output '{"user": .user, "orgs": ["組織C", "組織D"]}' sample2.json > tmp.json
+          mv tmp.json sample2.json
+
+      # sample2: 作成した JSON ファイルを確認
+      - name: sample2.json output
+        run: cat sample2.json
