@@ -15,6 +15,9 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - name: command test
+      run: |
+        ls
     - uses: actions/checkout@v4
       with:
         ref: ${{ github.sha }}
