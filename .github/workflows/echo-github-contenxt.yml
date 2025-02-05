@@ -17,7 +17,7 @@ jobs:
     steps:
     - name: command test
       run: |
-        # pwd
+        pwd
     - uses: actions/checkout@v4
       with:
         ref: ${{ github.sha }}
